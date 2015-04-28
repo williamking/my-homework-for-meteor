@@ -8,6 +8,8 @@ Template.login.events {
         Meteor.login-with-password username, password, (err)!->
             if (err)
                 alert('Error username or password!')
+            else
+                Router.go '/'
     'click #register': (e)!->
         Router.go '/register'
 }

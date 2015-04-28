@@ -3,10 +3,16 @@ root = exports ? @
 root.Content = new Mongo.Collection 'Content'
 
 root.Content.allow {
+    insert: (user-id, post)->
+        user = Meteor.user!
+        if user._id is user-id and user.profile is 'student'
+            return true
+        else
+            return false
     update: (userId, post)->
         ownsDocument userId, post
     remove: (userId, post)->
-        ownsDocument user, post
+        ownsDocument userId, post
 }
 
 root.Content.deny {

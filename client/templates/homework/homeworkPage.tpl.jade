@@ -1,9 +1,36 @@
 template(name="homework-page")
     div#homework-page
-        h1 #{homework.name}
+        h1 #{homework.title}
         p #{homework.demand}
-        ul#content-list
-            each content in contents
-                li
-                    a(href='content#{content._id')
-                        #{content.author-name}
+        p The deadline is #{homework.deadline}
+        p #{profile}
+        +if $eq profile 'teacher'
+            form.main.form#edit-homework(method="POST")
+                div.form-group
+                    label.control-label title:
+                    input(name="title", type="text")
+                div.form-group
+                    label.control-label demand:
+                    input(name="demand", type="text")
+                div.form-group
+                    label.control-label deadline:
+                    input(name="deadline", type="text")
+                button(type="submit").btn.btn-primary Edit
+            p The homework submitted is as belowed:
+            ul#content-list
+                each contents
+                    li
+                        a(href='contlent/#{_id}')
+                            #{author-name}
+        else
+            +if contents
+                p This is your homework:
+                p
+                    a(href="../content/#{contents._id}") Edit it?
+            else
+                form.main.form#create-content(method="POST")
+                    div.form-group
+                        label.control-label content:
+                        input(name="content", type="text")
+                    div.modal-footer
+                        button(type="submit").btn.btn-primary Write your homework

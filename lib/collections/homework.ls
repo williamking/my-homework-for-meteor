@@ -3,6 +3,8 @@ root = exports ? @
 root.Homework = new Mongo.Collection('Homework')
 
 root.Homework.allow {
+    insert: (user-id, post)->
+        return !! user-id
     update: (userId, post)->
         ownsDocument userId, post
     remove: (uerId, post)->
