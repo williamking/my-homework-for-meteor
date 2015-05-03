@@ -1,6 +1,6 @@
-Meteor.publish 'Homeworks', -> Homework.find!
+Meteor.publish 'Homework', -> Homework.find!
 
-Meteor.publish 'Contents', -> Content.find!
+Meteor.publish 'Content', -> Content.find!
 
 # Meteor.publish 'userData', ->
 #     if this.user-id

@@ -1,3 +1,6 @@
+# Meteor.subscribe 'Homework'
+# Meteor.subscribe 'Content'
+
 Template.homework-list.helpers {
     homeworks: ->
         user = Meteor.user!
@@ -5,6 +8,9 @@ Template.homework-list.helpers {
             return Homework.find {teacher-id: user._id}
         else
             return Homework.find!
+
+    profile: ->
+        return Meteor.user!.profile
 }
 
 Template.homework-page.helpers {
@@ -71,4 +77,30 @@ Template.homework-page.events {
         console.log post
 
         Router.go '/homework/' + homework-id
+
+    'submit form#edit-homework': (e)->
+        e.prevent-default!
+    
+        homework-id = Session.get 'homeworkId'
+
+        post = {
+            # user-id: Meteor.user!._id,
+            title: $(e.target).find '[name=title]' .val!,
+            demand: $(e.target).find '[name=demand]' .val!,
+            deadline: $(e.target).find '[name=deadline]' .val!
+        }
+
+        Homework.update homework-id, {$set: post}, (error)->
+            if error
+                alert(error.reason)
+
+    'click .delete': (e)->
+        e.prevent-default!
+
+        homework-id = Session.get 'homeworkId'
+
+        if confirm "Delete this homework?"
+            Homework.remove homework-id
+            Router.go 'homeworkList'
+
 }

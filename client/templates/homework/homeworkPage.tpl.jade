@@ -16,17 +16,17 @@ template(name="homework-page")
                     label.control-label deadline:
                     input(name="deadline", type="text")
                 button(type="submit").btn.btn-primary Edit
+                button.btn.btn-danger.delete Delete
             p The homework submitted is as belowed:
             ul#content-list
                 each contents
                     li
-                        a(href='contlent/#{_id}')
-                            #{author-name}
+                        a(href='../content/#{_id}') #{authorName}
         else
             +if contents
                 p This is your homework:
                 p
-                    a(href="../content/#{contents._id}") Edit it?
+                    a(href="../content/#{contents._id}") See or Edit.
             else
                 form.main.form#create-content(method="POST")
                     div.form-group

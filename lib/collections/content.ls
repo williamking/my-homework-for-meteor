@@ -10,14 +10,14 @@ root.Content.allow {
         else
             return false
     update: (userId, post)->
-        ownsDocument userId, post
+        return true
     remove: (userId, post)->
         ownsDocument userId, post
 }
 
 root.Content.deny {
-    update: (userId, psot, field-names)->
-        _.without field-names, 'content' .length > 0
+    update: (userId, post, field-names)->
+        _.without field-names, 'content', 'score' .length > 0
 }
 
 Meteor.methods {

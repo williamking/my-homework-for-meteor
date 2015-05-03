@@ -1,3 +1,6 @@
+# Meteor.subscribe 'Homework'
+# Meteor.subscribe 'Content'
+
 Template.content-page.helpers {
     author: ->
         content-id = Session.get 'contentId'
@@ -8,7 +11,19 @@ Template.content-page.helpers {
     content: ->
         content-id = Session.get 'contentId'
         content = Content.find-one {_id: content-id}
-        return content.content
+        return content
+
+    profile: ->
+        return Meteor.user!.profile
+
+    can: ->
+        now-date = new Date()
+        content-id = Session.get 'contentId'
+        content = Content.find-one {_id: content-id}
+        homework = Homework.find-one {_id: content.homework-id}
+        deadline = homework.deadline.split "-"
+        endDate = new Date(deadline[0], deadline[1], deadline[2])
+        return Date.parse(now-date) -  Date.parse(endDate) >= 0
 }
 
 Template.content-page.events {
@@ -29,7 +44,7 @@ Template.content-page.events {
     'submit form#enscore': (e)->
         e.prevent-default!
 
-        content-id = Session.get 'content-id'
+        content-id = Session.get 'contentId'
 
         post =
             score: $(e.target).find '[name=score]' .val!

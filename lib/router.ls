@@ -2,7 +2,8 @@ Router.configure {
     layoutTemplate: 'main',
     loadingTemplate: 'loading',
     waitOn: ->
-        Meteor.subscribe 'Homeworks'
+        Meteor.subscribe 'Homework'
+        Meteor.subscribe 'Content'
 }
 
 Router.route '/', {name: 'homeworkList'}
